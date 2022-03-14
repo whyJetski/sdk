@@ -223,7 +223,7 @@ public:
 	using UObject::UObject;
 	UField* Next;
 };
-
+// idk
 class UProperty : public UField
 {
 public:
@@ -255,7 +255,7 @@ public:
 	UProperty* PostConstructLink;
 	TArray<UObject*> ScriptObjectReferences;
 };
-
+// idk
 class UFunction : public UStruct
 {
 public:
@@ -280,7 +280,7 @@ inline void ProcessEvent(void* obj, UFunction* function, void* parms)
 	auto vtable = *reinterpret_cast<void***>(obj);
 	reinterpret_cast<void(*)(void*, UFunction*, void*)>(vtable[59])(obj, function, parms);
 }
-
+// idk
 class UClass : public UStruct
 {
 public:
@@ -379,7 +379,7 @@ struct AAthenaPlayerCharacter {
 
 struct APlayerState
 {
-	char pad[0x3d8]; // 0x3d0
+	char pad[0x03D0];
 	float                                              Score;                                                     // 0x03D0(0x0004) (BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float											   Ping;                                                      // 0x03D4(0x0001) (BlueprintVisible, BlueprintReadOnly, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	FString							                   PlayerName;                                                // 0x03D8 (BlueprintVisible, BlueprintReadOnly, Net, ZeroConstructor, RepNotify, HasGetValueTypeHash)
@@ -403,7 +403,7 @@ struct APlayerState
 	}
 
 };
-
+// idk 28-c-c=10 ha nem jo try 28
 struct FMinimalViewInfo {
 	FVector Location;
 	FRotator Rotation;
@@ -451,13 +451,13 @@ struct FCameraCacheEntry {
 	FMinimalViewInfo POV;
 };
 
-struct FTViewTarget // if bad 0x8 both, try 0x0 not 5b0
+struct FTViewTarget
 {
 	class AActor* Target;                                                    // 0x0000(0x0008) (Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	unsigned char                                      UnknownData_KHBN[0x8];                                     // 0x0008(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 	struct FMinimalViewInfo                            POV;                                                       // 0x0010(0x05A0) (Edit, BlueprintVisible)
 	class APlayerState* PlayerState;                                               // 0x05B0(0x0008) (Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
-	unsigned char                                      UnknownData_QIMB[0x5B0];                                     // 0x05B8(0x0008) MISSED OFFSET (PADDING)
+	unsigned char                                      UnknownData_QIMB[0x8];                                     // 0x05B8(0x0008) MISSED OFFSET (PADDING)
 
 };
 
@@ -488,7 +488,7 @@ struct APlayerCameraManager {
 	}
 };
 
-// if bad 0x18 og 0x0 new?
+
 struct FKey
 {
 	FName KeyName;
@@ -497,15 +497,15 @@ struct FKey
 	FKey() {};
 	FKey(const char* InName) : KeyName(FName(InName)) {}
 };
-
+// idk ez allitolag jo?
 struct AController {
 
 	char pad_0000[0x03E8];
 	class ACharacter* Character; //0x03E8
 	char pad_0480[0x70];
 	APlayerCameraManager* PlayerCameraManager; //0x0460
-	char pad_04f8[0x1031];
-	bool IdleDisconnectEnabled; // 0x14D1
+	char pad_04f8[0x1059];
+	bool	IdleDisconnectEnabled; // 0x14D1
 
 	void UnPossess()
 	{
@@ -608,9 +608,9 @@ struct AController {
 		return params.ReturnValue;
 	}
 };
-// regi 0x00D8
+
 struct UHealthComponent {
-	char pad[0xd8];
+	char pad[0x00D8];
 	float                                              MinTimeSinceLastPredictedHealthChangeToFireChangedEventAgain; // 0x00D8(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              MaxHealth;                                                 // 0x00E0(0x0004) (Edit, Net, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 
@@ -645,9 +645,9 @@ struct UHealthComponent {
 };
 
 
-// idk which one is this (maybe class USkeletalMeshComponent : public USkinnedMeshComponent ?)
+// idk 590 volt try 448(jo), 848(jo) 5A8 volt
 struct USkeletalMeshComponent {
-	char pad[0x5A8];
+	char pad[0x590];
 	TArray<FTransform> SpaceBasesArray[2];
 	int CurrentEditableSpaceBases;
 	int CurrentReadSpaceBases;
@@ -713,7 +713,7 @@ struct UDrowningComponent {
 		return oxygen;
 	}
 };
-
+// idk jo
 struct AFauna {
 	char pad1[0x0808];
 	FString* DisplayName; // 0x0808
@@ -727,12 +727,12 @@ enum class ESwimmingCreatureType : uint8_t
 	Siren = 3,
 	ESwimmingCreatureType_MAX = 4
 };
-// Class Athena.SwimmingCreaturePawn (reminder)
+
 struct ASharkPawn {
 	char pad1[0x04C8];
-	USkeletalMeshComponent* Mesh; // 0x04C8 class USkeletalMeshMemoryConstraintComponent*    Mesh;   // 0x04C8(0x0008) Edit, BlueprintVisible, ExportObject, BlueprintReadOnly,
+	USkeletalMeshComponent* Mesh; // 0x04C8
 	char pad2[0x5C];
-	ESwimmingCreatureType SwimmingCreatureType; // 0x052C Athena_ESwimmingCreatureType     SwimmingCreatureType;// 0x052C(0x0001) Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor,
+	ESwimmingCreatureType SwimmingCreatureType; // 0x052C
 };
 
 struct FAIEncounterSpecification
@@ -742,10 +742,10 @@ struct FAIEncounterSpecification
 };
 
 struct UWieldedItemComponent {
-	char pad[0x02C0];
-	ACharacter* CurrentlyWieldedItem; // 0x02C0
+	char pad[0x02E0];
+	ACharacter* CurrentlyWieldedItem; // 0x02E0
 };
-// reminder, 
+
 struct FWeaponProjectileParams
 {
 	float                                              Damage;                                                   // 0x0000(0x0004) (Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData)
@@ -765,7 +765,7 @@ struct FProjectileShotParams
 	float                                              ProjectileDamage;                                         // 0x0010(0x0004) (Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData)
 	float                                              ProjectileDamageMultiplierAtMaximumRange;                 // 0x0014(0x0004) (Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData)
 };
-// reminder
+
 struct FProjectileWeaponParameters {
 	int AmmoClipSize; // 0x00(0x04)
 	int AmmoCostPerShot; // 0x04(0x04)
@@ -784,30 +784,30 @@ struct FProjectileWeaponParameters {
 	struct UClass* DamagerType; // 0x60(0x08)
 	struct UClass* ProjectileId; // 0x68(0x08)
 	struct FWeaponProjectileParams AmmoParams; // 0x70(0xa8)
-	bool UsesScope; // 0x118(0x01)
-	char UnknownData_119[0x3]; // 0x119(0x03)
-	float ZoomedRecoilDurationIncrease; // 0x11c(0x04)
-	float SecondsUntilZoomStarts; // 0x120(0x04)
-	float SecondsUntilPostStarts; // 0x124(0x04)
-	float WeaponFiredAINoiseRange; // 0x128(0x04)
-	float MaximumRequestPositionDelta; // 0x12c(0x04)
-	float MaximumRequestAngleDelta; // 0x130(0x04)
-	float TimeoutTolerance; // 0x134(0x04)
-	float AimingMoveSpeedScalar; // 0x138(0x04)
-	char AimSensitivitySettingCategory; // 0x13c(0x01)
-	char UnknownData_13D[0x3]; // 0x13d(0x03)
-	float InAimFOV; // 0x140(0x04)
-	float BlendSpeed; // 0x144(0x04)
-	struct UWwiseEvent* DryFireSfx; // 0x148(0x08)
-	struct FName RumbleTag; // 0x160(0x08)
-	bool KnockbackEnabled; // 0x168(0x01)
-	char UnknownData_169[0x3]; // 0x169(0x03)
-	bool StunEnabled; // 0x1bc(0x01)
-	char UnknownData_1BD[0x3]; // 0x1bd(0x03)
-	float StunDuration; // 0x1c0(0x04)
-	struct FVector TargetingOffset; // 0x1c4(0x0c)
+	bool UsesScope; // 0x128(0x01)
+	char UnknownData_119[0x3]; // 0x129(0x03)
+	float ZoomedRecoilDurationIncrease; // 0x12c(0x04)
+	float SecondsUntilZoomStarts; // 0x130(0x04)
+	float SecondsUntilPostStarts; // 0x134(0x04)
+	float WeaponFiredAINoiseRange; // 0x138(0x04)
+	float MaximumRequestPositionDelta; // 0x13c(0x04)
+	float MaximumRequestAngleDelta; // 0x140(0x04)
+	float TimeoutTolerance; // 0x144(0x04)
+	float AimingMoveSpeedScalar; // 0x148(0x04)
+	char AimSensitivitySettingCategory; // 0x14c(0x01)
+	char UnknownData_13D[0x3]; // 0x14d(0x03)
+	float InAimFOV; // 0x150(0x04)
+	float BlendSpeed; // 0x154(0x04)
+	struct UWwiseEvent* DryFireSfx; // 0x158(0x08)
+	struct FName RumbleTag; // 0x170(0x08)
+	bool KnockbackEnabled; // 0x178(0x01)
+	char UnknownData_169[0x3]; // 0x179(0x03)
+	bool StunEnabled; // 0x1cc(0x01)
+	char UnknownData_1BD[0x3]; // 0x1cd(0x03)
+	float StunDuration; // 0x1d0(0x04)
+	struct FVector TargetingOffset; // 0x1d4(0x0c)
 };
-// reminder
+
 struct FText
 {
 	char UnknownData[0x38];
@@ -843,7 +843,7 @@ class FString UKismetTextLibrary::Conv_TextToString(const struct FText& InText)
 
 	return params.ReturnValue;
 }
-// Class Athena.RepairableComponent
+
 struct URepairableComponent {
 	unsigned char                                      UnknownData_WIVW[0x18];                                    // 0x0118(0x0018) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 	float                                              InteractionPointDepthOffset;                               // 0x0160(0x0004) (Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
@@ -881,7 +881,7 @@ struct UStorageContainerComponent
 	char pad1[0x0150];
 	FStorageContainerBackingStore               ContainerNodes;                                            // 0x0150(0x0040) (Edit, Net, DisableEditOnInstance, RepNotify, Protected)
 };
-// Class Athena.Bucket
+
 struct ABucket {
 	char pad1[0x0798];
 	class UInventoryItemComponent* InventoryItem;                                             // 0x0798(0x0008) (Edit, BlueprintVisible, ExportObject, ZeroConstructor, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
@@ -917,8 +917,8 @@ struct ABucket {
 };
 
 struct AProjectileWeapon {
-	char pad[0x7d0]; // 0
-	FProjectileWeaponParameters WeaponParameters; // 0x7d0
+	char pad[0x7d0];
+	FProjectileWeaponParameters WeaponParameters; // 0x7d0(0x1e0)
 
 	bool CanFire()
 	{
@@ -952,7 +952,7 @@ struct UGrenadeSetupDataAsset
 	class UCurveFloat* PitchToProjectileSpeedCurve;                               // 0x0040(0x0008) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	class UCurveFloat* ProjectileSpeedToAngleVarianceCurve;                       // 0x0048(0x0008) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              ProjectileGravityScale;                                    // 0x0050(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	unsigned char                                      UnknownData_DDO3[0x4];                                     // 0x0054(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+	unsigned char                                      UnknownData_54[0x4];                                     // 0x0054(0x0004) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 	class UCurveFloat* ExtraPitchCurve;                                           // 0x0058(0x0008) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              MinPitch;                                                  // 0x0060(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              MaxPitch;                                                  // 0x0064(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
@@ -963,11 +963,11 @@ struct UGrenadeSetupDataAsset
 	float                                              MinTimeBetweenOfferingAndThrowing;                         // 0x0078(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              TimeToConsumePostThrow;                                    // 0x007C(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	bool                                               UseVisualThrowOffset;                                      // 0x0080(0x0001) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor)
-	unsigned char                                      UnknownData_2LFR[0x3];                                     // 0x0081(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
+	unsigned char                                      UnknownData_81[0x3];                                     // 0x0081(0x0003) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
 	float                                              AIThrowDelayTime;                                          // 0x0084(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              AIThrowProjectileSpeed;                                    // 0x0088(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	bool                                               AIThrowPreferHigherAngles;                                 // 0x008C(0x0001) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor)
-	unsigned char                                      UnknownData_MWIT[0x3];                                     // 0x008D(0x0003) MISSED OFFSET (PADDING)
+	unsigned char                                      UnknownData_8D[0x3];                                     // 0x008D(0x0003) MISSED OFFSET (PADDING)
 };
 
 struct FWorldMapIslandDataCaptureParams
@@ -977,22 +977,22 @@ struct FWorldMapIslandDataCaptureParams
 	char pad2[0x8];
 	float                                              CameraOrthoWidth;                                          // 0x002C(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
-// idk Class Athena.XMarksTheSpotMap    0x0818 0x80 0x18 old
+
 struct AXMarksTheSpotMap
 {
 	char pad1[0x0820];
-	struct FString                                     MapTexturePath;                                            // 0x0818(0x0010) (Net, ZeroConstructor, RepNotify, HasGetValueTypeHash)
+	struct FString                                     MapTexturePath;                                            // 0x0820(0x0010) (Net, ZeroConstructor, RepNotify, HasGetValueTypeHash)
 	char pad2[0x80];
-	TArray<struct FXMarksTheSpotMapMark>               Marks;                                                     // 0x08A8(0x0010) (Net, ZeroConstructor, RepNotify)
+	TArray<struct FXMarksTheSpotMapMark>               Marks;                                                     // 0x08B0(0x0010) (Net, ZeroConstructor, RepNotify)
 	char pad3[0x18];
-	float                                              Rotation;                                                  // 0x08D0(0x0004) (Net, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	float                                              Rotation;                                                  // 0x08D8(0x0004) (Net, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
 
 struct FVector_NetQuantize : public FVector
 {
 
 };
-// ScriptStruct Engine.HitResult
+
 struct FHitResult
 {
 	unsigned char                                      bBlockingHit : 1;                                         // 0x0000(0x0001)
@@ -1008,28 +1008,29 @@ struct FHitResult
 	struct FName                                       BoneName;                                                 // 0x0074(0x0008) (ZeroConstructor, IsPlainOldData)
 	int                                                FaceIndex;                                                // 0x007C(0x0004) (ZeroConstructor, IsPlainOldData)
 };
-
+//jo? idk ha nem akkor csinalj pad1-2 belole
 struct UWorldMapIslandDataAsset {
-	char pad[0x0030];
+	char pad1[0x30];
 	struct FWorldMapIslandDataCaptureParams            CaptureParams;                                             // 0x0030(0x0040) (Edit, BlueprintVisible, BlueprintReadOnly)
+	char pad2[0x48];
 	FVector WorldSpaceCameraPosition;
 																												  // ADD THE OFFSET OF CAPTUREPARAMS TO THIS OFFSET
 };
 
 struct UIslandDataAssetEntry {
-	char pad1[0x0028];
+	char pad1[0x28];
 	struct FName IslandName; // 0x0028(0x0008) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	char pad2[0x10];
-	UWorldMapIslandDataAsset* WorldMapData; // 0x0040
+	UWorldMapIslandDataAsset* WorldMapData; // 0x0040(0x8)
 	char pad3[0x68];
-	FString* LocalisedName; // 0x00B0
+	FString* LocalisedName; // 0x00B0(0x38)
 };
 
 struct UIslandDataAsset {
 	char pad[0x0048];
-	TArray<UIslandDataAssetEntry*> IslandDataEntries; // 0x0048
+	TArray<UIslandDataAssetEntry*> IslandDataEntries; // 0x0048(0x10)
 };
-
+// jo
 struct AIslandService {
 	char pad[0x0460];
 	UIslandDataAsset* IslandDataAsset; // 0x460
@@ -1096,7 +1097,7 @@ struct APuzzleVault {
 	char pad[0x1000];
 	ASlidingDoor* OuterDoor; // 0x1000
 };
-
+// idk
 struct FGuid
 {
 	int                                                A;                                                         // 0x0000(0x0004) (Edit, ZeroConstructor, SaveGame, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
@@ -1135,12 +1136,12 @@ struct FCrew
 	unsigned char                                      UnknownData00[0x8];                                       // 0x0078(0x0008) MISSED OFFSET
 	TArray<class AActor*>                              AssociatedActors;                                         // 0x0080(0x0010) (ZeroConstructor)
 };
-
+//jo
 struct ACrewService {
 	char pad[0x04A8];
 	TArray<FCrew> Crews; // 0x04A8
 };
-// Class Cooking.CookingPot
+
 class CookingPot
 {
 	char pad[0x0400];
@@ -1149,7 +1150,7 @@ class CookingPot
 	class UCookerComponent* CookerComponent;                                           // 0x0410(0x0008) (Edit, ExportObject, ZeroConstructor, DisableEditOnInstance, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              HoldToInteractTime;                                        // 0x0418(0x0004) (Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
-// class Cooking.CookerComponent follow the order for offsets
+
 class UCookerComponent
 {
 	char pad1[0x00D0];
@@ -1172,11 +1173,11 @@ class UCookerComponent
 	bool                                               OnIsland;                                                  // 0x01A9(0x0001) (Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor)
 	unsigned char                                      UnknownData_UJO5[0x9E];                                    // 0x01AA(0x009E) MISSED OFFSET (PADDING)
 };
-// Class Athena.Ship
+// 518-> FD2
 struct AShip
 {
-	char pad1[0x0518];
-	bool                                               EmissaryFlagActive;                                        // 0x0FBA(0x0001) (Net, ZeroConstructor, IsPlainOldData, NoDestructor)
+	char pad1[0x0FD2];
+	bool                                               EmissaryFlagActive;                                        // 0x0FD2(0x0001) (Net, ZeroConstructor, IsPlainOldData, NoDestructor)
 
 	FVector GetCurrentVelocity() {
 		static auto fn = UObject::FindObject<UFunction>("Function Athena.Ship.GetCurrentVelocity");
@@ -1219,11 +1220,11 @@ struct UBootyStorageSettings
 
 struct ABootyStorageService
 {
-	char pad1[0x0450];
-	class UBootyStorageSettings* BootyStorageSettings;                                      // 0x0450(0x0008) (ZeroConstructor, Transient, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	class UBootyStorageSettingsAsset* BootyStorageSettingsAsset;                                 // 0x0458(0x0008) (ZeroConstructor, Transient, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	TArray<struct FCrewBootyStorage>                   Storage;                                                   // 0x0460(0x0010) (Net, ZeroConstructor, RepNotify)
-	unsigned char                                      UnknownData_7TKK[0x8];                                     // 0x0750(0x0008) MISSED OFFSET (PADDING)
+	char pad1[0x0458];
+	class UBootyStorageSettings* BootyStorageSettings;                                      // 0x0458(0x0008) (ZeroConstructor, Transient, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	class UBootyStorageSettingsAsset* BootyStorageSettingsAsset;                                 // 0x0460(0x0008) (ZeroConstructor, Transient, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	TArray<struct FCrewBootyStorage>                   Storage;                                                   // 0x0468(0x0010) (Net, ZeroConstructor, RepNotify)
+	unsigned char                                      UnknownData_7TKK[0x8];                                     // 0x0758(0x0008) MISSED OFFSET (PADDING)
 };
 
 struct ATimeService
@@ -1231,7 +1232,7 @@ struct ATimeService
 	char pad1[0x0414];
 	uint32_t                                           TimeScalar;                                                // 0x0414(0x0004) (Edit, Net, ZeroConstructor, Config, DisableEditOnInstance, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
 };
-
+// jo
 struct AAthenaGameState {
 	char pad[0x05B8];
 	class AWindService* WindService;                                             // 0x05B8(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
@@ -1290,38 +1291,38 @@ struct AAthenaGameState {
 	class ACampaignService* CampaignService;                                         // 0x0760(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
 	class AStoryService* StoryService;                                            // 0x0768(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
 	class AStorySpawnedActorsService* StorySpawnedActorsService;                               // 0x0770(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class AFlamesOfFateSettingsService* FlamesOfFateSettingsService;                             // 0x0778(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class AServiceStatusNotificationsService* ServiceStatusNotificationsService;                       // 0x0780(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class UMigrationService* MigrationService;                                        // 0x0788(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class AShroudBreakerService* ShroudBreakerService;                                    // 0x0790(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UServerUpdateReportingService* ServerUpdateReportingService;                            // 0x0798(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class AGenericMarkerService* GenericMarkerService;                                    // 0x07A0(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class AMechanismsService* MechanismsService;                                       // 0x07A8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UMerchantContractsService* MerchantContractsService;                                // 0x07B0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UShipFactory* ShipFactory;                                             // 0x07B8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class URewindPhysicsService* RewindPhysicsService;                                    // 0x07C0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UNotificationMessagesDataAsset* NotificationMessagesDataAsset;                           // 0x07C8(0x0008) Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class AProjectileCooldownService* ProjectileCooldownService;                               // 0x07D0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UIslandReservationService* IslandReservationService;                                // 0x07D8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class APortalService* PortalService;                                           // 0x07E0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UMeshMemoryConstraintService* MeshMemoryConstraintService;                             // 0x07E8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class ABootyStorageService* BootyStorageService;                                     // 0x07F0(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class ASpireService* SpireService;                                            // 0x07F8(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class AFireworkService* FireworkService;                                         // 0x0800(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class UAirGivingService* AirGivingService;                                        // 0x0808(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UCutsceneService* CutsceneService;                                         // 0x0810(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class ACargoRunService* CargoRunService;                                         // 0x0818(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class ACommodityDemandService* CommodityDemandService;                                  // 0x0820(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class ADebugTeleportationDestinationService* DebugTeleportationDestinationService;                    // 0x0828(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
-	class ASeasonProgressionUIService* SeasonProgressionUIService;                              // 0x0830(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UTransientActorService* TransientActorService;                                   // 0x0838(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UTunnelsOfTheDamnedService* TunnelsOfTheDamnedService;                               // 0x0840(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UWorldSequenceService* WorldSequenceService;                                    // 0x0848(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UItemLifetimeManagerService* ItemLifetimeManagerService;                              // 0x0850(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class USeaFortsService* SeaFortsService;                                         // 0x0858(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class ABeckonService* BeckonService;                                           // 0x0860(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UVolcanoService* VolcanoService;                                          // 0x0868(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
-	class UShipAnnouncementService* ShipAnnouncementService;                                 // 0x0870(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class AFlamesOfFateSettingsService* FlamesOfFateSettingsService;                             // 0x0780(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class AServiceStatusNotificationsService* ServiceStatusNotificationsService;                       // 0x0788(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class UMigrationService* MigrationService;                                        // 0x0790(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class AShroudBreakerService* ShroudBreakerService;                                    // 0x0798(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UServerUpdateReportingService* ServerUpdateReportingService;                            // 0x07a0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class AGenericMarkerService* GenericMarkerService;                                    // 0x07a8(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class AMechanismsService* MechanismsService;                                       // 0x07b0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UMerchantContractsService* MerchantContractsService;                                // 0x07b8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UShipFactory* ShipFactory;                                             // 0x07c0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class URewindPhysicsService* RewindPhysicsService;                                    // 0x07c8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UNotificationMessagesDataAsset* NotificationMessagesDataAsset;                           // 0x07d0(0x0008) Edit, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class AProjectileCooldownService* ProjectileCooldownService;                               // 0x07d8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UIslandReservationService* IslandReservationService;                                // 0x07e0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class APortalService* PortalService;                                           // 0x07e8(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UMeshMemoryConstraintService* MeshMemoryConstraintService;                             // 0x07f0(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class ABootyStorageService* BootyStorageService;                                     // 0x07f8(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class ASpireService* SpireService;                                            // 0x0800(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class AFireworkService* FireworkService;                                         // 0x0808(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class UAirGivingService* AirGivingService;                                        // 0x0810(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UCutsceneService* CutsceneService;                                         // 0x818(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class ACargoRunService* CargoRunService;                                         // 0x820(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class ACommodityDemandService* CommodityDemandService;                                  // 0x0828(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class ADebugTeleportationDestinationService* DebugTeleportationDestinationService;                    // 0x0830(0x0008) Net, ZeroConstructor, IsPlainOldData, RepNotify, NoDestructor, HasGetValueTypeHash
+	class ASeasonProgressionUIService* SeasonProgressionUIService;                              // 0x0838(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UTransientActorService* TransientActorService;                                   // 0x0840(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UTunnelsOfTheDamnedService* TunnelsOfTheDamnedService;                               // 0x0848(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UWorldSequenceService* WorldSequenceService;                                    // 0x0850(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UItemLifetimeManagerService* ItemLifetimeManagerService;                              // 0x0858(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class USeaFortsService* SeaFortsService;                                         // 0x0860(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class ABeckonService* BeckonService;                                           // 0x0868(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UVolcanoService* VolcanoService;                                          // 0x0870(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
+	class UShipAnnouncementService* ShipAnnouncementService;                                 // 0x0878(0x0008) ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash
 
 };
 
@@ -1399,7 +1400,7 @@ struct USceneComponent {
 		return location;
 	}
 };
-
+// jo asszem
 struct UAthenaCharacterMovementSettings
 {
 	char pad1[0x0038];
@@ -1412,7 +1413,7 @@ struct UAthenaCharacterMovementSettings
 	float                                              TimeBetweenPlayerDistanceChecks;                           // 0x0050(0x0004) (Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              TimeToSimulateNewCharacters;                               // 0x0054(0x0004) (Edit, ZeroConstructor, Config, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
-
+//jo asszem
 struct UCharacterMovementComponent {
 	char pad1[0x0180];
 	float                                              GravityScale;                                              // 0x0180(0x0004) (Edit, BlueprintVisible, ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
@@ -1509,7 +1510,7 @@ struct FFloatRange {
 	float pad2;
 	float max;
 };
-
+// jo asszem idk a kozepen
 struct ACannon {
 	char pad_4324[0x0528];
 	struct USkeletalMeshComponent* BaseMeshComponent; // 0x528(0x08)
@@ -1546,39 +1547,39 @@ struct ACannon {
 	char pad_9335443224[0x18];
 	unsigned char                                      UnknownData_BEDV[0x20];                                    // 0x0630(0x0020) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
 	float DefaultFOV; // 0x668(0x04)
-	float AimFOV; // 0x66c(0x04)
-	float IntoAimBlendSpeed; // 0x670(0x04)
-	float OutOfAimBlendSpeed; // 0x674(0x04)
-	struct UWwiseEvent* FireSfx; // 0x678(0x08)
-	struct UWwiseEvent* DryFireSfx; // 0x680(0x08)
-	struct UWwiseEvent* LoadingSfx_Play; // 0x688(0x08)
-	struct UWwiseEvent* LoadingSfx_Stop; // 0x690(0x08)
-	struct UWwiseEvent* UnloadingSfx_Play; // 0x698(0x08)
-	struct UWwiseEvent* UnloadingSfx_Stop; // 0x6a0(0x08)
-	struct UWwiseEvent* LoadedPlayerSfx; // 0x6a8(0x08)
-	struct UWwiseEvent* UnloadedPlayerSfx; // 0x6b0(0x08)
-	struct UWwiseEvent* FiredPlayerSfx; // 0x6b8(0x08)
-	struct UWwiseObjectPoolWrapper* SfxPool; // 0x6c0(0x08)
-	struct UWwiseEvent* StartPitchMovement; // 0x6c8(0x08)
-	struct UWwiseEvent* StopPitchMovement; // 0x6d0(0x08)
-	struct UWwiseEvent* StartYawMovement; // 0x6d8(0x08)
-	struct UWwiseEvent* StopYawMovement; // 0x6e0(0x08)
-	struct UWwiseEvent* StopMovementAtEnd; // 0x6e8(0x08)
-	struct UWwiseObjectPoolWrapper* SfxMovementPool; // 0x6f0(0x08)
-	struct UObject* FuseVfxFirstPerson; // 0x6f8(0x08)
-	struct UObject* FuseVfxThirdPerson; // 0x700(0x08)
-	struct UObject* MuzzleFlashVfxFirstPerson; // 0x708(0x08)
-	struct UObject* MuzzleFlashVfxThirdPerson; // 0x710(0x08)
-	struct FName FuseSocketName; // 0x718(0x08)
-	struct FName BarrelSocketName; // 0x720(0x08)
-	struct UClass* RadialCategoryFilter; // 0x728(0x08)
-	struct UClass* DefaultLoadedItemDesc; // 0x730(0x08)
-	float ClientRotationBlendTime; // 0x738(0x04)
-	char UnknownData_73C[0x4]; // 0x73c(0x04)
-	struct AItemInfo* LoadedItemInfo; // 0x740(0x08)
-	unsigned char UnknownData_LECI[0xc]; // 0x748(0x0c)
-	float ServerPitch; // 0x754(0x04)
-	float ServerYaw; // 0x758(0x04)
+	float AimFOV; // 0x684(0x04)
+	float IntoAimBlendSpeed; // 0x688(0x04)
+	float OutOfAimBlendSpeed; // 0x68c(0x04)
+	struct UWwiseEvent* FireSfx; // 0x690(0x08)
+	struct UWwiseEvent* DryFireSfx; // 0x698(0x08)
+	struct UWwiseEvent* LoadingSfx_Play; // 0x6a0(0x08)
+	struct UWwiseEvent* LoadingSfx_Stop; // 0x6a8(0x08)
+	struct UWwiseEvent* UnloadingSfx_Play; // 0x6b0(0x08)
+	struct UWwiseEvent* UnloadingSfx_Stop; // 0x6b8(0x08)
+	struct UWwiseEvent* LoadedPlayerSfx; // 0x6c0(0x08)
+	struct UWwiseEvent* UnloadedPlayerSfx; // 0x6c8(0x08)
+	struct UWwiseEvent* FiredPlayerSfx; // 0x6d0(0x08)
+	struct UWwiseObjectPoolWrapper* SfxPool; // 0x6d8(0x08)
+	struct UWwiseEvent* StartPitchMovement; // 0x6e0(0x08)
+	struct UWwiseEvent* StopPitchMovement; // 0x6e8(0x08)
+	struct UWwiseEvent* StartYawMovement; // 0x6f0(0x08)
+	struct UWwiseEvent* StopYawMovement; // 0x6f8(0x08)
+	struct UWwiseEvent* StopMovementAtEnd; // 0x700(0x08)
+	struct UWwiseObjectPoolWrapper* SfxMovementPool; // 0x708(0x08)
+	struct UObject* FuseVfxFirstPerson; // 0x710(0x08)
+	struct UObject* FuseVfxThirdPerson; // 0x718(0x08)
+	struct UObject* MuzzleFlashVfxFirstPerson; // 0x720(0x08)
+	struct UObject* MuzzleFlashVfxThirdPerson; // 0x728(0x08)
+	struct FName FuseSocketName; // 0x730(0x08)
+	struct FName BarrelSocketName; // 0x738(0x08)
+	struct UClass* RadialCategoryFilter; // 0x740(0x08)
+	struct UClass* DefaultLoadedItemDesc; // 0x748(0x08)
+	float ClientRotationBlendTime; // 0x750(0x04)
+	char UnknownData_73C[0x4]; // 0x754(0x04)
+	struct AItemInfo* LoadedItemInfo; // 0x758(0x08)
+	unsigned char UnknownData_LECI[0xc]; // 0x760(0x0c)
+	float ServerPitch; // 0x76c(0x04)
+	float ServerYaw; // 0x770(0x04)
 
 	void HandlePitchInput(float Pitch)
 	{
@@ -1651,21 +1652,21 @@ struct ACannon {
 	}
 
 };
-// idk
+//idk
 struct UItemDesc {
 	char pad[0x0028];
 	FString* Title; // 0x0028(0x38)
 };
-// Class Athena.ItemInfo
+
 struct AItemInfo {
 	char pad[0x0430];
 	UItemDesc* Desc; // 0x0430(0x08)
 };
-
+// 104->100
 struct UInteractableComponent
 {
-	char pad1[0x0104];
-	float                                              InteractionRadius;                                         // 0x0104(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
+	char pad1[0x0100];
+	float                                              InteractionRadius;                                         // 0x0100(0x0004) (Edit, ZeroConstructor, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
 };
 
 struct AHarpoonLauncher {
@@ -1705,7 +1706,7 @@ struct UInventoryManipulatorComponent {
 		return params.ReturnValue;
 	}
 };
-// Class Engine.ActorComponent
+
 class UActorComponent
 {
 	unsigned char                                      UnknownData_GRZN[0x8];                                     // 0x0028(0x0008) MISSED OFFSET (FIX SPACE BETWEEN PREVIOUS PROPERTY)
@@ -1767,7 +1768,7 @@ struct FDrunkennessSetupData
 
 struct UEmissaryShipAffiliationTrackerComponent
 {
-	char pad[0x02B0];
+	char pad[0x02D0];
 	int EmissaryCount;
 };
 
@@ -1792,7 +1793,7 @@ enum class Athena_ELoadableState : uint8_t
 	ELoadableState__ELoadableState_MAX = 4,
 };
 
-// reminder try to add oos later
+
 struct AEmissaryVoteInteractionActor
 {
 	char pad[0x0648];
@@ -1804,14 +1805,14 @@ struct AEmissaryVoteInteractionActor
 	char pad3[0x8];
 	UEmissaryShipAffiliationTrackerComponent* ReaperEmissaryShipAffiliationTracker; //0x06A0
 };
-
+// idk try B0 if bad
 struct ULoadableComponent
 {
 	char pad1[0x00D0];
 	float                                              LoadTime;                                                  // 0x00D0(0x0004) (Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 	float                                              UnloadTime;                                                // 0x00D4(0x0004) (Edit, BlueprintVisible, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	char pad2[0xA4];
-	Athena_ELoadableState                     LoadableComponentState;                                    // 0x0178(0x0010) (Net, RepNotify)
+	char pad2[0xB4];
+	Athena_ELoadableState                     LoadableComponentState;                                    // 0x0188(0x0010) (Net, RepNotify)
 };
 
 enum class Athena_ERegenerationState : uint8_t
@@ -1849,7 +1850,7 @@ struct UHealthRegenerationPoolComponent
 	float                                              MaxCapacity;                                               // 0x00D0(0x0004) (Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
 	float                                              HealingRate;                                               // 0x00D4(0x0004) (Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
 	float                                              HealingDelayWhenDamaged;                                   // 0x00D8(0x0004) (Edit, ZeroConstructor, DisableEditOnInstance, IsPlainOldData, NoDestructor, Protected, HasGetValueTypeHash)
-	char pad2[0x14];
+	char pad2[0x8];
 	struct FHealthRegenState* RegenerationState;                                         // 0x00E8(0x0008) (Net, Transient, RepNotify, Protected)
 
 	void OnRep_RegenerationState(OlderFHealthRegenState& OldRegenerationState)
@@ -1866,39 +1867,41 @@ struct FHealthRegenState
 	char pad1[0x0004];
 	Athena_ERegenerationState           State;                                                     // 0x0004(0x0001) (ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
-// 180? regi 170
+
 struct UActorDamageableComponent
 {
 	char pad1[0x0180];
-	UHealthComponent* HealthComp;                                                // 0x0170(0x0008) (ExportObject, ZeroConstructor, Transient, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	UHealthComponent* HealthComp;                                                // 0x0180(0x0008) (ExportObject, ZeroConstructor, Transient, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
-
+// 448 mesh helyett try 590,
 class ACharacter : public UObject {
 public:
 
-	char pad1[0x3C8];	//0x28 from inherit
-	APlayerState* PlayerState;  // 0x03F0
+	char pad1[0x3C8];	//0x28 from inherit  
+	APlayerState* PlayerState;  // 0x03F0 
 	char pad2[0x10];
-	AController* Controller; // 0x0408
+	AController* Controller; // 0x0408 
 	char pad3[0x38];
-	USkeletalMeshComponent* Mesh; // 0x0448
-	UCharacterMovementComponent* CharacterMovement; // 0x450
+	USkeletalMeshComponent* Mesh; // 0x0448 (0x8)
+	UCharacterMovementComponent* CharacterMovement; // 0x450(0x8)
 	char pad4[0x3D8];
-	UWieldedItemComponent* WieldedItemComponent; // 0x0830
-	char pad43[0x8];
-	UInventoryManipulatorComponent* InventoryManipulatorComponent; // 0x0840
-	char pad5[0x10];
-	UHealthComponent* HealthComponent; // 0x0858(0x0008)
-	char pad6[0x10];
-	UActorDamageableComponent* ActorDamageableComponent;                                  // 0x0870(0x0008) (Edit, BlueprintVisible, ExportObject, BlueprintReadOnly, ZeroConstructor, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	char pad7[0x498];
-	USceneComponent* FirstPersonMeshOffsetComponent;                                         // 0x0D10(0x0008) (Edit, BlueprintVisible, ExportObject, BlueprintReadOnly, ZeroConstructor, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	char pad9[0x58];
-	UDrowningComponent* DrowningComponent; // 0x0D70(0x0008)
-	char pad10[0xA0];
-	UHealthRegenerationPoolComponent* HealthRegenerationPoolComponent;                           // 0x0E18(0x0008) (Edit, ExportObject, ZeroConstructor, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
-	char pad11[0xC48];
-	bool                                               FinishedWaitingForSpawn;                                   // 0x1A68(0x0001) (Net, ZeroConstructor, IsPlainOldData, NoDestructor)
+	UWieldedItemComponent* WieldedItemComponent; // 0x0830 
+	char pad5[0x20];
+	//char pad43[0x8];
+	//UInventoryManipulatorComponent* InventoryManipulatorComponent; // 0x0840
+	//char pad5[0x10];
+	UHealthComponent* HealthComponent; // 0x0858(0x0008) 
+	char pad6[0xA48];
+	//char pad6[0x10];
+	//UActorDamageableComponent* ActorDamageableComponent;                                  // 0x0870(0x0008) (Edit, BlueprintVisible, ExportObject, BlueprintReadOnly, ZeroConstructor, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	//char pad7[0x430];
+	//USceneComponent* FirstPersonMeshOffsetComponent;                                         // 0xCA8(0x0008) (Edit, BlueprintVisible, ExportObject, BlueprintReadOnly, ZeroConstructor, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	//char pad9[0x58];
+	UDrowningComponent* DrowningComponent; // 0xd08(0x0008) 
+	//char pad10[0xA0];
+	//UHealthRegenerationPoolComponent* HealthRegenerationPoolComponent;                           // 0xDB0(0x0008) (Edit, ExportObject, ZeroConstructor, EditConst, InstancedReference, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
+	//char pad11[0xC48];
+	//bool                                               FinishedWaitingForSpawn;                                   // 0x1A00(0x0001) (Net, ZeroConstructor, IsPlainOldData, NoDestructor)
 
 
 
@@ -2580,7 +2583,7 @@ struct UGameInstance {
 	char UnknownData00[0x38];
 	TArray<UPlayer*> LocalPlayers; // 0x38
 };
-// class ULevel : public UObject 0x28? might b fix
+//idk
 struct ULevel {
 	char UnknownData00[0xA0];
 	TArray<ACharacter*> AActors;
@@ -2593,7 +2596,7 @@ struct UNetConnection
 	double                                             LastReceiveTime;                                           // 0x03A0(0x0008) (ZeroConstructor, IsPlainOldData, NoDestructor, HasGetValueTypeHash)
 };
 
-
+// idk qnlt stimmel eddig minden
 struct UNetDriver
 {
 	char pad[0x0048];
